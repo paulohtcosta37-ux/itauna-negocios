@@ -186,7 +186,7 @@ function showEmptyState(isoString) {
     if (emptyStateTitle) {
       emptyStateTitle.innerText = 'Sem Relatórios Disponíveis';
     }
-    emptyStateMessage.innerHTML = `Não há registros de inteligência comercial cadastrados para o dia <strong>${formattedDateStr}</strong>.`;
+    emptyStateMessage.innerHTML = `Não há registros de análises comerciais cadastrados para o dia <strong>${formattedDateStr}</strong>.`;
   }
   
   emptyState.style.display = 'flex';
@@ -335,7 +335,7 @@ function openModal(newsItem) {
   const analysisText = newsItem.investigativeAnalysis || "Nenhuma análise aprofundada fornecida.";
   document.getElementById('modalAnalysis').innerHTML = analysisText.split('\n').map(p => `<p style="margin-bottom:12px;">${p}</p>`).join('');
   
-  // Renderizar gráficos se for de impacto Alto ou Médio (Dashboard de Inteligência)
+  // Renderizar gráficos se for de impacto Alto ou Médio (Dashboard de Análise)
   const intelSection = document.getElementById('modalIntelligenceSection');
   const chartContainer = document.getElementById('modalChartContainer');
   

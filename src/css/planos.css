@@ -1065,6 +1065,24 @@ textarea.form-control {
   font-weight: 500;
 }
 
+/* Botão WhatsApp Prominente */
+.whatsapp-btn {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease !important;
+}
+
+.whatsapp-btn:hover {
+  transform: translateY(-2px) scale(1.03) !important;
+  box-shadow: 0 12px 30px rgba(37, 211, 102, 0.4) !important;
+}
+
+.whatsapp-btn svg {
+  transition: transform 0.3s ease;
+}
+
+.whatsapp-btn:hover svg {
+  transform: rotate(15deg) scale(1.15);
+}
+
 /* Responsividade */
 @media (max-width: 992px) {
   .hero-section {
