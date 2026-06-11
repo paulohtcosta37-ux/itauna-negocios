@@ -290,53 +290,35 @@
     </section>
 
     <!-- Seção de Contato -->
-    <section class="contact-section glass-panel" id="contato">
-      <div class="contact-info">
-        <h2 class="contact-title">Dê o próximo passo para o crescimento.</h2>
-        <p class="contact-subtitle">
+    <section class="contact-section glass-panel" id="contato" style="display: flex; flex-direction: column; align-items: center; text-align: center; max-width: 800px; margin-left: auto; margin-right: auto; padding: 50px 30px; gap: 30px;">
+      <div class="contact-info" style="align-items: center; text-align: center; width: 100%;">
+        <h2 class="contact-title" style="margin-bottom: 15px;">Dê o próximo passo para o crescimento.</h2>
+        <p class="contact-subtitle" style="margin-bottom: 25px; max-width: 600px; margin-left: auto; margin-right: auto;">
           Entre em contato hoje mesmo. Nossa equipe criará uma proposta personalizada baseada no seu mercado em Itaúna.
         </p>
 
+        <!-- Botão WhatsApp Prominente e Centralizado -->
+        <div style="display: flex; justify-content: center; margin-bottom: 25px; width: 100%;">
+          <a href="https://api.whatsapp.com/send?phone=5531996293728&text=Ol%C3%A1%2C%20quero%20aumentar%20o%20meu%20alcan%C3%A7e%20de%20clientes!" target="_blank" class="btn btn-primary whatsapp-btn" style="background: linear-gradient(135deg, #25D366, #128C7E); box-shadow: 0 10px 25px rgba(37, 211, 102, 0.25); display: inline-flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; font-weight: 700; width: fit-content; border: none; padding: 14px 28px; border-radius: 12px; color: white;">
+            <svg style="width: 22px; height: 22px; fill: white; display: block; margin: 0; padding: 0;" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M12.03 2c-5.52 0-10 4.48-10 10 0 1.93.55 3.73 1.5 5.26L2.03 22l4.9-1.44c1.46.85 3.16 1.34 4.97 1.34 5.52 0 10-4.48 10-10s-4.48-10-10-10zm5.66 14.18c-.27.76-1.32 1.48-2.16 1.64-.63.12-1.46.21-4.24-.95-3.56-1.48-5.86-5.1-6.04-5.34-.18-.24-1.44-1.92-1.44-3.66 0-1.74.9-2.59 1.22-2.94.32-.35.85-.44 1.1-.44.25 0 .5.01.72.02.23.01.5.01.73.54.24.57.81 2 .88 2.14.07.15.12.32.02.51-.1.19-.15.3-.3.49-.15.18-.3.32-.45.5-.16.19-.34.39-.14.73.2.34.89 1.47 1.92 2.39 1.32 1.18 2.43 1.55 2.77 1.72.34.17.54.14.74-.08.2-.23.85-.99 1.08-1.33.23-.34.46-.29.77-.18.31.11 2 .94 2.34 1.11.34.17.57.25.65.39.08.14.08.82-.19 1.58z"/>
+            </svg>
+            Falar no WhatsApp
+          </a>
+        </div>
 
-
-        <div class="contact-details">
-          <div class="contact-detail-item">
-            <div class="contact-detail-icon">
+        <!-- E-mail Comercial Centralizado -->
+        <div class="contact-details" style="display: flex; justify-content: center; align-items: center; width: 100%;">
+          <div class="contact-detail-item" style="display: flex; align-items: center; justify-content: center; gap: 15px;">
+            <div class="contact-detail-icon" style="margin: 0;">
               <span class="material-symbols-rounded">mail</span>
             </div>
-            <div class="contact-detail-text">
+            <div class="contact-detail-text" style="text-align: left;">
               <h4>E-mail Comercial</h4>
               <p>contato@planosdigital.com.br</p>
             </div>
           </div>
         </div>
-      </div>
-
-      <!-- Formulário Glass -->
-      <div class="contact-form glass-panel" style="position: relative;">
-        <!-- Success Overlay (Simulado) -->
-        <div class="success-overlay" id="successOverlay">
-          <span class="material-symbols-rounded success-icon">check_circle</span>
-          <h3>Mensagem Enviada!</h3>
-          <p>Entraremos em contato via E-mail nas próximas 2 horas.</p>
-        </div>
-
-        <form id="planosContactForm">
-          <div class="form-group">
-            <label for="formEmail">Seu E-mail *</label>
-            <input type="email" id="formEmail" class="form-control" placeholder="Ex: joao@empresa.com" required>
-          </div>
-
-          <div class="form-group">
-            <label for="formMsg">Qual o seu objetivo comercial? *</label>
-            <textarea id="formMsg" class="form-control" placeholder="Conte-nos um pouco sobre seu negócio e quais serviços precisa." required></textarea>
-          </div>
-
-          <button type="submit" class="btn btn-primary form-submit-btn">
-            Enviar Pedido de Diagnóstico
-            <span class="material-symbols-rounded">send</span>
-          </button>
-        </form>
       </div>
     </section>
 
@@ -351,9 +333,14 @@
 
   </div>
 
-
+  <!-- Botão Flutuante WhatsApp Liquid Glass -->
+  <a href="https://api.whatsapp.com/send?phone=5531996293728&text=Ol%C3%A1%2C%20quero%20aumentar%20o%20meu%20alcan%C3%A7e%20de%20clientes!" target="_blank" class="floating-whatsapp" aria-label="Falar no WhatsApp">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M12.03 2c-5.52 0-10 4.48-10 10 0 1.93.55 3.73 1.5 5.26L2.03 22l4.9-1.44c1.46.85 3.16 1.34 4.97 1.34 5.52 0 10-4.48 10-10s-4.48-10-10-10zm5.66 14.18c-.27.76-1.32 1.48-2.16 1.64-.63.12-1.46.21-4.24-.95-3.56-1.48-5.86-5.1-6.04-5.34-.18-.24-1.44-1.92-1.44-3.66 0-1.74.9-2.59 1.22-2.94.32-.35.85-.44 1.1-.44.25 0 .5.01.72.02.23.01.5.01.73.54.24.57.81 2 .88 2.14.07.15.12.32.02.51-.1.19-.15.3-.3.49-.15.18-.3.32-.45.5-.16.19-.34.39-.14.73.2.34.89 1.47 1.92 2.39 1.32 1.18 2.43 1.55 2.77 1.72.34.17.54.14.74-.08.2-.23.85-.99 1.08-1.33.23-.34.46-.29.77-.18.31.11 2 .94 2.34 1.11.34.17.57.25.65.39.08.14.08.82-.19 1.58z"/>
+    </svg>
+  </a>
 
   <!-- Scripts -->
-  <script src="./src/js/planos.js?v=1.0.7"></script>
+  <script src="./src/js/planos.js?v=1.0.8"></script>
 </body>
 </html>

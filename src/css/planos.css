@@ -1106,8 +1106,11 @@ textarea.form-control {
 }
 
 .floating-whatsapp svg {
+  display: block;
   width: 28px;
   height: 28px;
+  margin: 0 !important;
+  padding: 0 !important;
   fill: #25D366; /* Cor oficial do WhatsApp */
   transition: transform 0.3s ease, fill 0.3s ease;
 }
