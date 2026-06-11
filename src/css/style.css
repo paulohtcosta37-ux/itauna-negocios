@@ -1087,3 +1087,48 @@ body {
   25% { transform: rotate(12deg); }
   75% { transform: rotate(-12deg); }
 }
+
+/* Botão Flutuante WhatsApp Liquid Glass */
+.floating-whatsapp {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50% !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.35) !important;
+  backdrop-filter: blur(15px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(15px) saturate(180%) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.5) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), inset 0 1px 1px rgba(255, 255, 255, 0.5) !important;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease, background-color 0.3s ease !important;
+  animation: pulse-glass-portal 3s infinite ease-in-out;
+}
+
+.floating-whatsapp svg {
+  width: 28px;
+  height: 28px;
+  fill: #25D366; /* Cor oficial do WhatsApp */
+  transition: transform 0.3s ease, fill 0.3s ease;
+}
+
+.floating-whatsapp:hover {
+  transform: scale(1.1) translateY(-4px) !important;
+  background: rgba(255, 255, 255, 0.45) !important;
+  box-shadow: 0 12px 30px rgba(37, 211, 102, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.6) !important;
+}
+
+.floating-whatsapp:hover svg {
+  transform: scale(1.1);
+  fill: #128C7E;
+}
+
+@keyframes pulse-glass-portal {
+  0%, 100% { box-shadow: 0 8px 32px rgba(37, 211, 102, 0.15), inset 0 1px 1px rgba(255, 255, 255, 0.5); }
+  50% { box-shadow: 0 8px 36px rgba(37, 211, 102, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.5); }
+}
