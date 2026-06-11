@@ -1,0 +1,9 @@
+# Ignore Python requirements to prevent Vercel from trying to build a Python app
+requirements.txt
+
+# Ignore agent scripts and development files
+agent/
+JV/
+instagram_posts.md
+instagram_posts_assets/
+recording_prototype.html
