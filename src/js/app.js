@@ -1,10 +1,33 @@
-import { formatISODate, getWeekdayName, getMonthName, fetchNewsByDate } from './utils.js';
+import { formatISODate, getWeekdayName, getMonthName, fetchNewsByDate } from './utils.js?v=1.1.2';
 
-// Desregistrar qualquer service worker ativo para evitar cache persistente de PWAs anteriores
+// Limpar Cache Storage imediatamente para evitar dados obsoletos
+if ('caches' in window) {
+  caches.keys().then(function(names) {
+    for (let name of names) {
+      caches.delete(name);
+    }
+  });
+}
+
+// Desregistrar qualquer service worker ativo para evitar cache persistente de PWAs anteriores e recarregar
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.getRegistrations().then(function(registrations) {
-    for (let registration of registrations) {
-      registration.unregister();
+    if (registrations.length > 0) {
+      console.log(`[Service Worker] Encontrados ${registrations.length} Service Workers ativos. Desregistrando e limpando cache...`);
+      const unregisterPromises = registrations.map(r => r.unregister());
+      Promise.all(unregisterPromises).then(() => {
+        console.log('[Service Worker] Todos os Service Workers desregistrados.');
+        if ('caches' in window) {
+          caches.keys().then(function(names) {
+            return Promise.all(names.map(name => caches.delete(name)));
+          }).then(() => {
+            console.log('[Cache] Cache limpo após desregistro. Recarregando página...');
+            window.location.reload();
+          });
+        } else {
+          window.location.reload();
+        }
+      });
     }
   });
 }
@@ -52,6 +75,7 @@ function setupDatesList() {
   state.datesList = [];
   for (let i = 0; i < 7; i++) {
     const d = new Date();
+    d.setHours(12, 0, 0, 0); // Evita oscilações de fuso horário / mudança de dia
     d.setDate(d.getDate() - i);
     state.datesList.push(d);
   }
@@ -95,6 +119,7 @@ function selectDate(date) {
   
   // Atualizar classe ativa na timeline
   const isoString = formatISODate(date);
+  console.log(`[News Portal] Data selecionada na timeline: ${isoString}`);
   const items = dateTimeline.querySelectorAll('.date-item');
   let found = false;
   
@@ -130,6 +155,7 @@ function selectDate(date) {
  */
 async function loadNewsForDate(date) {
   const isoString = formatISODate(date);
+  console.log(`[News Portal] Carregando notícias para: ${isoString}`);
   
   newsGrid.style.display = 'none';
   emptyState.style.display = 'none';
@@ -144,13 +170,16 @@ async function loadNewsForDate(date) {
   // Exceção: Liberado acesso para todas as datas menores ou iguais a 12/06/2026 (histórico inicial) para homologação do usuário.
   const isPastOrTodayException = isoString <= '2026-06-12';
   if (!isPastOrTodayException && (isoString > todayISO || (isoString === todayISO && currentHour < 18))) {
+    console.log(`[News Portal] Data ${isoString} bloqueada por horário (Antes das 18h).`);
     loaderContainer.style.display = 'none';
     state.currentNews = [];
     showEmptyState(isoString);
     return;
   }
   
+  console.log(`[News Portal] Chamando fetchNewsByDate para ${isoString}...`);
   const news = await fetchNewsByDate(isoString);
+  console.log(`[News Portal] Notícias retornadas para ${isoString}:`, news);
   
   loaderContainer.style.display = 'none';
   

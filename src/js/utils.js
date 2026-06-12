@@ -49,17 +49,21 @@ export function getMonthName(date) {
  */
 export async function fetchNewsByDate(isoDate) {
   // Cache busting dinâmico com timestamp em milissegundos para forçar o navegador a ignorar qualquer cache e baixar sempre o JSON atualizado
-  const filePath = `./src/data/news/news_${isoDate}.json?v=${new Date().getTime()}`;
+  const timestamp = new Date().getTime();
+  const filePath = `./src/data/news/news_${isoDate}.json?v=${timestamp}`;
+  console.log(`[News Portal] Buscando URL: ${filePath}`);
   
   try {
     const response = await fetch(filePath);
+    console.log(`[News Portal] Status da resposta HTTP para ${isoDate}: ${response.status} ${response.statusText}`);
     if (!response.ok) {
-      throw new Error(`Arquivo não encontrado para a data: ${isoDate}`);
+      throw new Error(`Arquivo não encontrado para a data: ${isoDate} (HTTP ${response.status})`);
     }
     const data = await response.json();
+    console.log(`[News Portal] JSON carregado com sucesso para ${isoDate}. Total de notícias: ${data ? data.length : 0}`);
     return data;
   } catch (error) {
-    console.warn(`Aviso ao carregar notícias para ${isoDate}:`, error.message);
+    console.warn(`[News Portal] Erro ao carregar notícias para ${isoDate}:`, error.message);
     return null;
   }
 }
