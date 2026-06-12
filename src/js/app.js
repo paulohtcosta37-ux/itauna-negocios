@@ -25,20 +25,10 @@ const modalCloseBtn = document.getElementById('modalCloseBtn');
 // ==========================================================================
 document.addEventListener('DOMContentLoaded', () => {
   setupDatesList();
-  
-  // UX: Se o acesso ocorrer antes das 18:00 de hoje, seleciona automaticamente o dia de ontem
-  // para que o portal abra diretamente com notícias completas em vez do aviso de espera.
-  const today = new Date();
-  if (today.getHours() < 18) {
-    const yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
-    state.selectedDate = yesterday;
-  }
-  
   renderDateTimeline();
   setupEventListeners();
   
-  // Carregar notícias para a data inicial
+  // Carregar notícias para a data inicial (hoje)
   loadNewsForDate(state.selectedDate);
 });
 
