@@ -371,6 +371,20 @@ function openModal(newsItem) {
   
   modalImpact.innerHTML = `<span class="material-symbols-rounded" style="font-size:12px; color:var(--impact-color);">fiber_manual_record</span> ${newsItem.impactLevel} Impacto`;
 
+  // Renderizar o link da fonte dinamicamente
+  const modalSourceLink = document.getElementById('modalSourceLink');
+  if (modalSourceLink) {
+    if (newsItem.sourceName && newsItem.sourceUrl) {
+      modalSourceLink.href = newsItem.sourceUrl;
+      modalSourceLink.innerHTML = `<span class="material-symbols-rounded" style="font-size: 14px;">open_in_new</span> ${newsItem.sourceName}`;
+      modalSourceLink.style.display = 'inline-flex';
+    } else {
+      modalSourceLink.style.display = 'none';
+      modalSourceLink.href = '';
+      modalSourceLink.innerHTML = '';
+    }
+  }
+
   // Exibir o modal
   newsModal.classList.add('active');
   newsModal.setAttribute('aria-hidden', 'false');

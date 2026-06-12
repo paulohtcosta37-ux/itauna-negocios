@@ -743,6 +743,32 @@ body {
   padding-bottom: 16px;
 }
 
+.modal-source-link {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  font-family: var(--font-subtitle);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--primary);
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: var(--border-radius-sm);
+  transition: var(--transition-smooth);
+}
+
+.modal-source-link:hover {
+  background: rgba(255, 255, 255, 0.5);
+  color: var(--primary-hover);
+  border-color: rgba(3, 83, 164, 0.25);
+  transform: translateY(-1px);
+}
+
 .modal-impact-badge {
   font-family: var(--font-body);
   font-size: 0.72rem;
