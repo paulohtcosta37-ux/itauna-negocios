@@ -132,7 +132,9 @@ async function loadNewsForDate(date) {
   
   // Regra de negócio: se for a data de hoje (ou futura) e ainda for antes das 18:00 locais,
   // força a exibição do estado vazio avisando o horário de liberação.
-  if (isoString > todayISO || (isoString === todayISO && currentHour < 18)) {
+  // Exceção: Liberado acesso para todas as datas menores ou iguais a 12/06/2026 (histórico inicial) para homologação do usuário.
+  const isPastOrTodayException = isoString <= '2026-06-12';
+  if (!isPastOrTodayException && (isoString > todayISO || (isoString === todayISO && currentHour < 18))) {
     loaderContainer.style.display = 'none';
     state.currentNews = [];
     showEmptyState(isoString);

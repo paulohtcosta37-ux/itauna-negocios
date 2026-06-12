@@ -49,7 +49,7 @@ export function getMonthName(date) {
  */
 export async function fetchNewsByDate(isoDate) {
   // Cache busting com a versão atual da aplicação para forçar a atualização imediata dos dados de notícias
-  const filePath = `./src/data/news/news_${isoDate}.json?v=1.0.8`;
+  const filePath = `./src/data/news/news_${isoDate}.json?v=1.1.0`;
   
   try {
     const response = await fetch(filePath);
