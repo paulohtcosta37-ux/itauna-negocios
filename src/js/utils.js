@@ -48,8 +48,8 @@ export function getMonthName(date) {
  * @returns {Promise<Array|null>} - Retorna a lista de notícias ou null se não encontrar
  */
 export async function fetchNewsByDate(isoDate) {
-  // Cache busting com a versão atual da aplicação para forçar a atualização imediata dos dados de notícias
-  const filePath = `./src/data/news/news_${isoDate}.json?v=1.1.0`;
+  // Cache busting dinâmico com timestamp em milissegundos para forçar o navegador a ignorar qualquer cache e baixar sempre o JSON atualizado
+  const filePath = `./src/data/news/news_${isoDate}.json?v=${new Date().getTime()}`;
   
   try {
     const response = await fetch(filePath);

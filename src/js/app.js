@@ -1,5 +1,14 @@
 import { formatISODate, getWeekdayName, getMonthName, fetchNewsByDate } from './utils.js';
 
+// Desregistrar qualquer service worker ativo para evitar cache persistente de PWAs anteriores
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.getRegistrations().then(function(registrations) {
+    for (let registration of registrations) {
+      registration.unregister();
+    }
+  });
+}
+
 // ==========================================================================
 // ESTADO DA APLICAÇÃO
 // ==========================================================================
