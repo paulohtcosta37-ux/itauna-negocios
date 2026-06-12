@@ -1,4 +1,4 @@
-import { formatISODate, getWeekdayName, getMonthName, fetchNewsByDate } from './utils.js?v=1.1.2';
+import { formatISODate, getWeekdayName, getMonthName, fetchNewsByDate } from './utils.js?v=1.1.3';
 
 // Limpar Cache Storage imediatamente para evitar dados obsoletos
 if ('caches' in window) {
@@ -157,6 +157,8 @@ async function loadNewsForDate(date) {
   const isoString = formatISODate(date);
   console.log(`[News Portal] Carregando notícias para: ${isoString}`);
   
+  // Limpar grid imediatamente ao iniciar o carregamento para evitar exibição de notícias antigas
+  newsGrid.innerHTML = '';
   newsGrid.style.display = 'none';
   emptyState.style.display = 'none';
   loaderContainer.style.display = 'flex';
@@ -166,10 +168,8 @@ async function loadNewsForDate(date) {
   const currentHour = today.getHours();
   
   // Regra de negócio: se for a data de hoje (ou futura) e ainda for antes das 18:00 locais,
-  // força a exibição do estado vazio avisando o horário de liberação.
-  // Exceção: Liberado acesso para todas as datas menores ou iguais a 12/06/2026 (histórico inicial) para homologação do usuário.
-  const isPastOrTodayException = isoString <= '2026-06-12';
-  if (!isPastOrTodayException && (isoString > todayISO || (isoString === todayISO && currentHour < 18))) {
+  // força a exibição do estado vazio avisando o horário de liberação comercial.
+  if (isoString > todayISO || (isoString === todayISO && currentHour < 18)) {
     console.log(`[News Portal] Data ${isoString} bloqueada por horário (Antes das 18h).`);
     loaderContainer.style.display = 'none';
     state.currentNews = [];
