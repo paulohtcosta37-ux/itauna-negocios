@@ -43,27 +43,25 @@ export function getMonthName(date) {
 }
 
 /**
- * Carrega o arquivo JSON de notícias para uma determinada data
- * @param {string} isoDate - Data no formato YYYY-MM-DD
- * @returns {Promise<Array|null>} - Retorna a lista de notícias ou null se não encontrar
+ * Carrega o banco de dados JSON completo de notícias com cache-busting dinâmico
+ * @returns {Promise<Array|null>} - Retorna a lista de todas as notícias ou null em caso de falha
  */
-export async function fetchNewsByDate(isoDate) {
-  // Cache busting dinâmico com timestamp em milissegundos para forçar o navegador a ignorar qualquer cache e baixar sempre o JSON atualizado
+export async function fetchNewsDatabase() {
   const timestamp = new Date().getTime();
-  const filePath = `./src/data/news/news_${isoDate}.json?v=${timestamp}`;
-  console.log(`[News Portal] Buscando URL: ${filePath}`);
+  const filePath = `./src/data/news_database.json?v=${timestamp}`;
+  console.log(`[News Portal] Buscando Banco de Dados Unificado: ${filePath}`);
   
   try {
     const response = await fetch(filePath);
-    console.log(`[News Portal] Status da resposta HTTP para ${isoDate}: ${response.status} ${response.statusText}`);
+    console.log(`[News Portal] Status da resposta HTTP do Banco de Dados: ${response.status} ${response.statusText}`);
     if (!response.ok) {
-      throw new Error(`Arquivo não encontrado para a data: ${isoDate} (HTTP ${response.status})`);
+      throw new Error(`Banco de dados não encontrado (HTTP ${response.status})`);
     }
     const data = await response.json();
-    console.log(`[News Portal] JSON carregado com sucesso para ${isoDate}. Total de notícias: ${data ? data.length : 0}`);
+    console.log(`[News Portal] Banco de dados carregado com sucesso. Total de registros: ${data ? data.length : 0}`);
     return data;
   } catch (error) {
-    console.warn(`[News Portal] Erro ao carregar notícias para ${isoDate}:`, error.message);
+    console.warn(`[News Portal] Erro ao carregar banco de dados de notícias:`, error.message);
     return null;
   }
 }

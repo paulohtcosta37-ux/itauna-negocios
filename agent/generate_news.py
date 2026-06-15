@@ -23,7 +23,8 @@ load_dotenv()
 # Configuração de caminhos
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 BASE_DIR = os.path.dirname(SCRIPT_DIR)
-DATA_DIR = os.path.join(BASE_DIR, 'src', 'data', 'news')
+DATA_DIR = os.path.join(BASE_DIR, 'src', 'data')
+DATABASE_FILE = os.path.join(DATA_DIR, 'news_database.json')
 
 # Garantir que a pasta de destino exista
 os.makedirs(DATA_DIR, exist_ok=True)
@@ -458,25 +459,42 @@ def main():
             print("[!] Falha na geração com IA. Usando Mock como plano de contingência.")
             news_result = generate_mock_data(target_date)
             
-    # Salvar o arquivo JSON final
+    # Salvar no banco de dados central consolidado news_database.json
     if news_result:
-        filename = f"news_{target_date}.json"
-        filepath = os.path.join(DATA_DIR, filename)
+        # Carregar banco de dados de notícias existente se houver
+        database = []
+        if os.path.exists(DATABASE_FILE):
+            try:
+                with open(DATABASE_FILE, 'r', encoding='utf-8') as f:
+                    database = json.load(f)
+                print(f"[*] Banco de dados carregado: {len(database)} registros encontrados.")
+            except Exception as e:
+                print(f"[!] Erro ao ler banco de dados existente: {e}. Criando um novo.")
+        
+        # Injetar o campo de data e remover duplicatas antigas do mesmo dia
+        for item in news_result:
+            item["date"] = target_date
+            
+        # Filtrar o banco de dados para remover notícias anteriores com a mesma data alvo
+        database = [item for item in database if item.get("date") != target_date]
+        
+        # Anexar as novas notícias
+        database.extend(news_result)
         
         try:
-            with open(filepath, 'w', encoding='utf-8') as f:
-                json.dump(news_result, f, ensure_ascii=False, indent=2)
+            with open(DATABASE_FILE, 'w', encoding='utf-8') as f:
+                json.dump(database, f, ensure_ascii=False, indent=2)
             
             print("=" * 60)
-            print(f"[SUCCESS] Relatório diário de negócios salvo com sucesso!")
-            print(f"[SUCCESS] Caminho: {filepath}")
-            print(f"[SUCCESS] Total de análises de impacto geradas: {len(news_result)}")
+            print(f"[SUCCESS] Banco de dados de negócios atualizado com sucesso!")
+            print(f"[SUCCESS] Caminho: {DATABASE_FILE}")
+            print(f"[SUCCESS] Total de análises no banco: {len(database)}")
             print("=" * 60)
             
             # Enviar atualizações para o GitHub se for um repositório git
             push_to_github()
         except Exception as e:
-            print(f"[!] Erro ao salvar arquivo JSON: {e}")
+            print(f"[!] Erro ao salvar banco de dados JSON: {e}")
             sys.exit(1)
     else:
         print("[!] Erro crítico: Nenhum dado foi gerado.")

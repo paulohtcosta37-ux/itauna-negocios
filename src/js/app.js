@@ -1,4 +1,4 @@
-import { formatISODate, getWeekdayName, getMonthName, fetchNewsByDate } from './utils.js?v=1.1.3';
+import { formatISODate, getWeekdayName, getMonthName, fetchNewsDatabase } from './utils.js?v=1.1.3';
 
 // Limpar Cache Storage imediatamente para evitar dados obsoletos
 if ('caches' in window) {
@@ -38,7 +38,8 @@ if ('serviceWorker' in navigator) {
 const state = {
   selectedDate: new Date(), // Inicialmente hoje
   datesList: [],            // Últimos 14 dias
-  currentNews: []           // Notícias do dia selecionado
+  currentNews: [],          // Notícias do dia selecionado
+  newsDatabase: []          // Todo o banco de dados carregado na inicialização
 };
 
 // Elementos do DOM
@@ -55,14 +56,26 @@ const modalCloseBtn = document.getElementById('modalCloseBtn');
 // ==========================================================================
 // INICIALIZAÇÃO
 // ==========================================================================
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+  if (loaderContainer) loaderContainer.style.display = 'flex';
   setupDatesList();
   renderDateTimeline();
   setupEventListeners();
   
+  // Carregar o banco de dados unificado na inicialização
+  await loadDatabase();
+  
   // Carregar notícias para a data inicial (hoje)
   loadNewsForDate(state.selectedDate);
 });
+
+/**
+ * Carrega o banco de dados completo na inicialização
+ */
+async function loadDatabase() {
+  const data = await fetchNewsDatabase();
+  state.newsDatabase = data || [];
+}
 
 // ==========================================================================
 // LÓGICA DE DATAS E LINHA DO TEMPO
@@ -177,9 +190,10 @@ async function loadNewsForDate(date) {
     return;
   }
   
-  console.log(`[News Portal] Chamando fetchNewsByDate para ${isoString}...`);
-  const news = await fetchNewsByDate(isoString);
-  console.log(`[News Portal] Notícias retornadas para ${isoString}:`, news);
+  // Filtramos as notícias do banco de dados unificado em memória pela data clicada
+  console.log(`[News Portal] Filtrando notícias em memória para a data ${isoString}...`);
+  const news = state.newsDatabase.filter(item => item.date === isoString);
+  console.log(`[News Portal] Notícias encontradas no banco para ${isoString}:`, news);
   
   loaderContainer.style.display = 'none';
   
