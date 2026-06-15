@@ -219,6 +219,15 @@ Hoje é dia {target_date}.
 
 Sua tarefa principal é produzir de 2 a 4 relatórios analíticos de mercado contendo notícias e fatos reais ocorridos estritamente na janela de tempo de 8:01 do dia anterior até o momento atual da pesquisa (hoje). Garanta que os fatos sejam desse intervalo para refletirem o dia presente.
 
+REGRA DE VERACIDADE ABSOLUTA:
+Você NUNCA deve inventar notícias ou simular fatos. Todas as notícias geradas devem ser estritamente reais, comprovadas por notícias ou publicações oficiais encontradas na web que ocorreram na janela especificada.
+
+REGRA DE LINKS REAIS E FUNCIONAIS:
+O campo `sourceUrl` deve conter uma URL 100% real, ativa e diretamente correspondente à publicação da notícia. Nunca utilize URLs fictícias, caminhos de placeholders ou domínios desativados (como jornaldeitauna.com.br). Se o link exato do post/matéria não estiver disponível, use a URL da página inicial do portal ativo correspondente (ex: https://viuitauna.com.br/, https://santanafm.com.br/, https://jornalspasso.com.br/ ou https://www.itauna.mg.gov.br/).
+
+COMPORTAMENTO DE SEGURANÇA (SEM NOTÍCIAS):
+Se após realizar as pesquisas você não encontrar nenhuma notícia ou fato real que atenda aos critérios e tenha impacto comercial em Itaúna-MG na janela de tempo, retorne simplesmente uma lista vazia `[]`. É preferível não exibir nada (o portal mostrará uma mensagem de aguardo adequada) do que inventar informações falsas.
+
 Para coletar e enriquecer seus relatórios com informações frescas e reais desse intervalo, você deve realizar pesquisas na web focando nas seguintes fontes em Itaúna-MG:
 1. Publicações recentes nos perfis públicos de Instagram mais influentes da cidade:
    - Prefeitura de Itaúna (@prefeituradeitauna)
