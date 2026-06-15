@@ -80,21 +80,21 @@ def scrape_santana_fm():
     return articles
 
 
-def scrape_jornal_de_itauna():
-    """Raspagem de notícias recentes do Jornal de Itaúna"""
-    url = "https://jornaldeitauna.com.br/"
+def scrape_viu_itauna():
+    """Raspagem de notícias recentes do Portal Viu Itaúna"""
+    url = "https://viuitauna.com.br/"
     print(f"[*] Raspando notícias de: {url}")
     articles = []
     
     try:
         response = requests.get(url, headers=HEADERS, timeout=15)
         if response.status_code != 200:
-            print(f"[!] Erro ao acessar Jornal de Itaúna: Código {response.status_code}")
+            print(f"[!] Erro ao acessar Viu Itaúna: Código {response.status_code}")
             return []
             
         soup = BeautifulSoup(response.text, 'html.parser')
         
-        # Busca por títulos e artigos baseados em tags comuns de notícias
+        # Busca por títulos e artigos baseados em tags comuns de notícias do WordPress no Viu Itaúna
         posts = soup.find_all(['article', 'div', 'section'], class_=['post', 'hentry', 'entry', 'ast-archive-post'])[:8]
         if not posts:
             posts = soup.find_all('h2', class_=['entry-title'])[:8]
@@ -111,15 +111,15 @@ def scrape_jornal_de_itauna():
                     summary = summary_tag.text.strip()
                     
                 articles.append({
-                    'source': 'Jornal de Itaúna',
+                    'source': 'Viu Itaúna',
                     'title': title,
                     'summary': summary,
                     'link': link
                 })
                 
-        print(f"[+] Jornal de Itaúna: {len(articles)} notícias encontradas.")
+        print(f"[+] Viu Itaúna: {len(articles)} notícias encontradas.")
     except Exception as e:
-        print(f"[!] Falha na raspagem do Jornal de Itaúna: {e}")
+        print(f"[!] Falha na raspagem do Viu Itaúna: {e}")
         
     return articles
 
@@ -225,7 +225,7 @@ Para coletar e enriquecer seus relatórios com informações frescas e reais des
    - TV Cidade Itaúna (@tvcidadeitauna)
    - Itaúna Alerta (@itaunaalerta)
    - Itaúna da Zoeira (@itaunadazoeira)
-2. Notícias recentes de portais locais (Santana FM, Jornal de Itaúna, folha local).
+2. Notícias recentes de portais locais (Santana FM, Viu Itaúna, Jornal S'passo, Folha do Povo).
 3. Anúncios, editais e comunicados no site da Universidade de Itaúna (UIT) e das principais escolas/colégios da cidade que possam afetar a dinâmica comercial (ex: volta às aulas, eventos de vestibulares, contratações, etc.).
 4. Portais e comunicados de entidades comerciais, como a CDL Itaúna (Câmara de Dirigentes Lojistas), ACE Itaúna, etc.
 
@@ -245,7 +245,7 @@ Para cada fato comercial importante (máximo 4 relatórios de notícias), crie u
 7. howToAct: Lista numerada prática com 2 ou 3 ações claras que os lojistas/comerciantes devem tomar para se preparar ou se proteger.
 8. howToProfit: Insights práticos e inovadores sobre como lucrar com a notícia (promoções casadas, novos kits, estratégias de marketing digital direcionadas).
 9. image: Campo nulo (defina sempre como null, pois as imagens foram removidas do frontend).
-10. sourceName: O nome da fonte real e exata da notícia (ex: 'Prefeitura de Itaúna', 'Santana FM', 'Jornal de Itaúna', 'CDL Itaúna', etc.).
+10. sourceName: O nome da fonte real e exata da notícia (ex: 'Prefeitura de Itaúna', 'Santana FM', 'Viu Itaúna', 'Jornal S'passo', 'CDL Itaúna', etc.).
 11. sourceUrl: O link URL real e específico de onde a notícia foi baseada ou um link realista correspondente diretamente ao artigo ou publicação oficial.
 
 O retorno deve ser EXCLUSIVAMENTE uma lista em formato JSON contendo os objetos de notícia. Não inclua nenhuma introdução ou formatação Markdown (como ```json).
@@ -326,8 +326,8 @@ def generate_mock_data(target_date):
             "howToAct": "1. Revisar políticas de cashback e planos de fidelidade da drogaria de bairro.\n2. Focar no atendimento humanizado e no WhatsApp delivery rápido.\n3. Oferecer entrega grátis sem valor mínimo.",
             "howToProfit": "Explore nichos como fitoterápicos artesanais, chás locais ou dermocosméticos orgânicos que a grande rede não prioriza. Realize parcerias de convênio de descontos com empresas locais para o fornecimento de medicamentos de uso contínuo a funcionários.",
             "image": None,
-            "sourceName": "Jornal de Itaúna",
-            "sourceUrl": "https://jornaldeitauna.com.br/inauguracao-de-megaloja-da-farmacia-araujo-no-centro-de-itauna-acirra-concorrencia/"
+            "sourceName": "Viu Itaúna",
+            "sourceUrl": "https://viuitauna.com.br/inauguracao-de-megaloja-da-farmacia-araujo-no-centro-de-itauna-acirra-concorrencia/"
         },
         {
             "id": str(uuid.uuid4()),
