@@ -75,7 +75,7 @@ Abaixo estão 3 propostas de posts (em formato carrossel, que gera maior engajam
 
 ---
 
-## 📌 Post 3: O Portal Noticiários (Inteligência de Mercado)
+## 📌 Post 3: O Portal Noticiário (Inteligência de Mercado)
 * **Objetivo:** Posicionar a sua marca como a maior referência em insights comerciais locais, atraindo empresários para conhecer a sua inteligência.
 * **Conceito Visual:** Visual moderno de dashboard corporativo com vidro escuro reflexivo. Tags coloridas flutuantes ("Economia", "Eventos"). Gráficos e dados brilhantes subindo em neon verde/ciano.
 
@@ -88,7 +88,7 @@ Abaixo estão 3 propostas de posts (em formato carrossel, que gera maior engajam
   * *Texto:* Notícias de Itaúna são mais do que fatos cotidianos.
   * *Subtítulo:* Um festival na praça ou uma obra na avenida mudam o fluxo e o consumo da sua loja. Você está pronto?
 * **Slide 3:** 
-  * *Texto:* O Portal Noticiários
+  * *Texto:* O Portal Noticiário
   * *Subtítulo:* Nós criamos e mantemos a plataforma líder de análise comercial de Itaúna. Nossa equipe resume os fatos e dá dicas práticas de como lucrar ou se proteger a cada mudança da cidade.
 * **Slide 4 (CTA):** 
   * *Texto:* Conhecimento é poder (e faturamento).
@@ -97,7 +97,7 @@ Abaixo estão 3 propostas de posts (em formato carrossel, que gera maior engajam
 ### ✍️ Legenda (Copy):
 > O comércio de Itaúna é extremamente dinâmico. Quem tem a informação primeiro e sabe como usá-la sai na frente.
 >
-> O portal **Noticiários** foi criado por nós para ser o hub definitivo de análises comerciais da cidade. Nossa equipe analisa os acontecimentos locais diários sob a ótica dos negócios:
+> O portal **Noticiário** foi criado por nós para ser o hub definitivo de análises comerciais da cidade. Nossa equipe analisa os acontecimentos locais diários sob a ótica dos negócios:
 >
 > 📊 Mapeamento de impacto financeiro por setor.
 > 💡 Recomendações práticas de marketing e promoções.
@@ -105,6 +105,6 @@ Abaixo estão 3 propostas de posts (em formato carrossel, que gera maior engajam
 >
 > Informação pura não gera vendas; a análise estratégica sim. Acesse o portal, veja os relatórios de hoje e prepare a sua empresa para vender mais nesta semana.
 >
-> 🔗 Acesse agora pelo link da bio: Noticiários.
+> 🔗 Acesse agora pelo link da bio: Noticiário.
 >
 > #itauna #noticiasitauna #comercioitauna #itaunanegocios #planejamento #vendas #inteligenciademercado
