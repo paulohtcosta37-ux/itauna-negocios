@@ -217,7 +217,7 @@ Você é um analista de inteligência de mercado altamente experiente, focado ex
 
 Hoje é dia {target_date}. 
 
-Sua tarefa principal é produzir de 2 a 4 relatórios analíticos de mercado contendo notícias e fatos reais ocorridos estritamente na janela de tempo de 8:01 do dia anterior até o momento atual da pesquisa (hoje). Garanta que os fatos sejam desse intervalo para refletirem o dia presente.
+Sua tarefa principal é produzir de 3 a 5 relatórios analíticos de mercado contendo notícias e fatos reais ocorridos estritamente na janela de tempo de 8:01 do dia anterior até o momento atual da pesquisa (hoje). Garanta que os fatos sejam desse intervalo para refletirem o dia presente.
 
 REGRA DE VERACIDADE ABSOLUTA:
 Você NUNCA deve inventar notícias ou simular fatos. Todas as notícias geradas devem ser estritamente reais, comprovadas por notícias ou publicações oficiais encontradas na web que ocorreram na janela especificada.
@@ -244,7 +244,7 @@ Só inclua notícias e fatos que tenham IMPACTO DIRETO E RELEVANTE para comercia
 Aqui estão algumas notícias brutas coletadas localmente hoje para ajudar como ponto de partida ou referência:
 {formatted_input}
 
-Para cada fato comercial importante (máximo 4 relatórios de notícias), crie um objeto JSON contendo exatamente estes campos:
+Para cada fato comercial importante (máximo 5 relatórios de notícias), crie um objeto JSON contendo exatamente estes campos:
 1. id: Um UUID aleatório novo (string).
 2. title: Título comercial focado no impacto de negócios (Ex: 'Grande público de festival gastronômico aquece restaurantes do Centro' ou 'Volta às aulas na UIT deve elevar consumo no bairro Universitário').
 3. category: Uma destas categorias exatas: 'Eventos' | 'Concorrência' | 'Economia Local' | 'Infraestrutura' | 'Oportunidades'.
@@ -337,6 +337,32 @@ def generate_mock_data(target_date):
             "image": None,
             "sourceName": "Itaúna Alerta",
             "sourceUrl": "https://itaunaalerta.com.br/"
+        },
+        {
+            "id": str(uuid.uuid4()),
+            "title": "Campanha institucional da ACE e CDL promove valorização e compras no comércio de Itaúna",
+            "category": "Oportunidades",
+            "executiveSummary": "A campanha da Associação Comercial e CDL Itaúna destaca o papel do comércio local no desenvolvimento econômico municipal, estimulando o consumo interno.",
+            "impactLevel": "Médio",
+            "investigativeAnalysis": "Campanhas institucionais integradas fortalecem a conexão emocional dos moradores com os comércios de bairro. Ao incentivar o consumo interno, as entidades de classe auxiliam na retenção do capital financeiro na cidade, aumentando as vendas no varejo de vestuário, calçados e alimentação. Lojistas que utilizarem a identidade visual da campanha em suas vitrines e publicações nas redes sociais conseguirão surfar no engajamento gerado pelas entidades.",
+            "howToAct": "1. Filiar-se ou participar das ações da ACE/CDL Itaúna para obter o selo e materiais de divulgação da campanha de varejo.\n2. Criar vitrines temáticas e banners destacando que o comércio local emprega e desenvolve a cidade.\n3. Desenvolver ofertas exclusivas para o comércio local para estimular clientes vizinhos a preferirem comprar perto de casa.",
+            "howToProfit": "Crie o 'Dia do Cliente Local' com pequenos mimos ou descontos especiais para quem comprovar residência em Itaúna-MG. Impulsione publicações nas redes sociais com a hashtag oficial da campanha da CDL para atrair tráfego qualificado.",
+            "image": None,
+            "sourceName": "CDL Itaúna",
+            "sourceUrl": "https://viuitauna.com.br/"
+        },
+        {
+            "id": str(uuid.uuid4()),
+            "title": "CDL Itaúna promove orientação para empresários sobre novas regras de segurança e saúde no trabalho (NR-1)",
+            "category": "Economia Local",
+            "executiveSummary": "A entidade orienta micro e pequenas empresas sobre a gestão de riscos psicossociais e conformidades da recente atualização da NR-1.",
+            "impactLevel": "Baixo",
+            "investigativeAnalysis": "As atualizações nas normas regulamentadoras federais exigem atenção redobrada dos setores de Recursos Humanos e gerência das empresas locais. A capacitação oferecida pela CDL Itaúna previne passivos trabalhistas futuros para o comércio local e ajuda os lojistas a se adequarem de forma ágil, melhorando a gestão interna e a produtividade das equipes no dia a dia do varejo.",
+            "howToAct": "1. Inscrever os gerentes e responsáveis de equipe nos treinamentos e palestras de orientação da CDL Itaúna.\n2. Revisar as práticas internas e a documentação de saúde e segurança do trabalho do comércio.\n3. Implementar canais simples de escuta e gestão de clima organizacional na loja.",
+            "howToProfit": "Use a conformidade trabalhista e a boa gestão de pessoas para se posicionar como uma marca empregadora de destaque na cidade de Itaúna-MG, atraindo os melhores talentos para o seu time de vendas.",
+            "image": None,
+            "sourceName": "CDL Itaúna",
+            "sourceUrl": "https://viuitauna.com.br/"
         }
     ]
     
