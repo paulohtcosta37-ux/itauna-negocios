@@ -301,68 +301,42 @@ def generate_mock_data(target_date):
     mock_data = [
         {
             "id": str(uuid.uuid4()),
-            "title": "Prefeitura confirma 'Arraial de Itaúna 2026' na Praça da Matriz com fins beneficentes e shows regionais",
-            "category": "Eventos",
-            "executiveSummary": "A Prefeitura de Itaúna, através da Secretaria de Cultura e Turismo, anunciou a edição 2026 da Festa Junina oficial para o dia 20 de junho na Praça da Matriz.",
-            "impactLevel": "Alto",
-            "investigativeAnalysis": "O Arraial de Itaúna 2026 acontecerá no sábado, dia 20 de junho, das 11h às 22h, e contará com a participação de 8 entidades assistenciais (como APAE, ABEASF, APAC e Lar Fraterno) comandando as barracas de comidas típicas (tropeiro, pastéis, caldos, churrasquinho e pescaria). Espera-se um público recorde de 20 mil pessoas ao longo do dia, o que aumentará drasticamente as vendas de vestuário típico (camisas xadrez, botas) nas semanas anteriores e gerará forte tráfego comercial no Centro de Itaúna, beneficiando estacionamentos, postos, hotéis e motoristas de aplicativo.",
-            "howToAct": "1. Lojistas de roupas e calçados do centro de Itaúna devem criar vitrines temáticas 'caipiras' com casacos e camisas xadrez.\n2. Distribuidores de alimentos e bebidas devem procurar as 8 entidades beneficentes parceiras para fechar acordos de fornecimento em escala de ingredientes típicos.\n3. Comércios alimentícios no entorno da Praça da Matriz devem reforçar equipes e estender o atendimento no sábado à noite.",
-            "howToProfit": "Desenvolva o 'Combo Arraial' de lanches rápidos para retirada no caminho do evento. Crie promoções em redes sociais com ideias de maquiagem e looks típicos com peças do seu estoque. Feche parcerias com motoristas locais para distribuir cartões com cupons de desconto físicos para quem for ou voltar do evento de táxi/Uber.",
-            "image": None,
-            "sourceName": "Prefeitura de Itaúna",
-            "sourceUrl": "https://www.itauna.mg.gov.br/portal/noticias/0/3/4521/prefeitura-confirma-arraial-de-itauna-2026-na-praca-da-matriz"
-        },
-        {
-            "id": str(uuid.uuid4()),
-            "title": "Festival Gastronômico de Itaúna 2026 inicia nesta sexta e promete aquecer comércio local",
-            "category": "Eventos",
-            "executiveSummary": "O evento gastronômico tradicional trará circuito gastronômico unificado na Praça da Matriz beneficiando diretamente restaurantes e hotéis.",
-            "impactLevel": "Alto",
-            "investigativeAnalysis": "O Festival Gastronômico atrai turistas de Divinópolis, Mateus Leme e Pará de Minas para Itaúna. A ocupação de hotéis atinge 85% para o fim de semana. O tráfego de pedestres no Centro sobe exponencialmente a partir das 18h.",
-            "howToAct": "1. Criar pratos temáticos paralelos fora da praça para capturar o público excedente.\n2. Lojas de roupas devem expor casacos de inverno na vitrine.\n3. Estender horário de atendimento no centro na sexta e sábado até mais tarde.",
-            "howToProfit": "Ofereça parcerias com motoristas de aplicativo locais dando cupons de desconto para sua loja. Use campanhas de geolocalização no Instagram no raio de 1km da Praça da Matriz.",
-            "image": None,
-            "sourceName": "Santana FM",
-            "sourceUrl": "https://santanafm.com.br/festival-gastronomico-de-itauna-2026-promete-aquecer-o-comercio-local/"
-        },
-        {
-            "id": str(uuid.uuid4()),
-            "title": "Inauguração de megaloja de farmácia Araújo no centro de Itaúna acirra concorrência com farmácias de bairro",
-            "category": "Concorrência",
-            "executiveSummary": "A nova unidade na Avenida Jove Soares conta com amplo estacionamento e mix ampliado, pressionando drogarias tradicionais a se adaptarem.",
-            "impactLevel": "Alto",
-            "investigativeAnalysis": "A nova Araújo na Jove Soares (Prainha) traz preços altamente competitivos e funcionamento 24h. As farmácias de bairro precisarão focar no atendimento humanizado, atenção farmacêutica personalizada e entrega rápida a domicílio via WhatsApp para manter a clientela fiel.",
-            "howToAct": "1. Revisar políticas de cashback e planos de fidelidade da drogaria de bairro.\n2. Focar no atendimento humanizado e no WhatsApp delivery rápido.\n3. Oferecer entrega grátis sem valor mínimo.",
-            "howToProfit": "Explore nichos como fitoterápicos artesanais, chás locais ou dermocosméticos orgânicos que a grande rede não prioriza. Realize parcerias de convênio de descontos com empresas locais para o fornecimento de medicamentos de uso contínuo a funcionários.",
+            "title": "SAAE Itaúna reativa sistema de fluoretação da água para atender normas federais",
+            "category": "Economia Local",
+            "executiveSummary": "O Serviço Autônomo de Água e Esgoto (SAAE) reativou o tanque e a dosagem de flúor no tratamento público, garantindo conformidade com a legislação federal.",
+            "impactLevel": "Médio",
+            "investigativeAnalysis": "A retomada da fluoretação da água tratada é uma adequação sanitária importante que impacta diretamente as indústrias locais de alimentos, confeitarias, padarias e cervejarias artesanais que utilizam a rede de abastecimento público. O restabelecimento da fluoretação em conformidade com as regras federais previne riscos de multas regulatórias e assegura o padrão higiênico para os estabelecimentos comerciais do setor alimentício.",
+            "howToAct": "1. Proprietários de restaurantes e padarias devem verificar os filtros de carvão ativo e manter as manutenções preventivas do sistema de filtragem de água.\n2. Cervejarias locais devem monitorar a composição da água para ajustar os sais e o perfil de fermentação das receitas.\n3. Divulgar nas redes sociais que o estabelecimento preza pelas normas de saúde e qualidade da água utilizada nos alimentos.",
+            "howToProfit": "Explore o marketing voltado para saúde e higiene, destacando que seu estabelecimento utiliza água 100% filtrada e tratada de acordo com as normas sanitárias vigentes. Crie campanhas sobre o uso de água limpa na produção de pães artesanais ou cafés especiais.",
             "image": None,
             "sourceName": "Viu Itaúna",
-            "sourceUrl": "https://viuitauna.com.br/inauguracao-de-megaloja-da-farmacia-araujo-no-centro-de-itauna-acirra-concorrencia/"
+            "sourceUrl": "https://viuitauna.com.br/"
         },
         {
             "id": str(uuid.uuid4()),
-            "title": "Universidade de Itaúna (UIT) anuncia volta às aulas e aquece setor de copiadoras e transporte estudantil",
-            "category": "Economia Local",
-            "executiveSummary": "O início do período acadêmico na UIT movimenta cerca de 8 mil estudantes na região universitária diariamente.",
-            "impactLevel": "Médio",
-            "investigativeAnalysis": "O retorno dos estudantes da UIT (vindos de várias cidades vizinhas) gera impacto direto nas repúblicas estudantis, lanchonetes próximas ao campus, papelarias e serviços de vans. O comércio do bairro Universitário e do Centro de Itaúna registra tradicional alta em consumo rápido de lanches e materiais escolares nas primeiras duas semanas letivas.",
-            "howToAct": "1. Papelarias e copiadoras locais devem estender o horário de funcionamento das 18h às 22h.\n2. Lanchonetes no trajeto universitário devem criar combos especiais de 'estudante' a preços promocionais.\n3. Motoristas de vans devem divulgar vagas disponíveis nas redes estudantis.",
-            "howToProfit": "Crie parcerias de descontos com o Diretório Acadêmico da UIT. Ofereça entrega de materiais de impressão direto na universidade em horários agendados.",
-            "image": None,
-            "sourceName": "Universidade de Itaúna",
-            "sourceUrl": "https://www.uit.br/noticias/volta-as-aulas-movimenta-campus-universitario"
-        },
-        {
-            "id": str(uuid.uuid4()),
-            "title": "Alerta de tráfego: Obra na Av. Jove Soares altera acesso à área de lazer noturna",
+            "title": "Acidente na Avenida Jove Soares impacta tráfego na principal via comercial de Itaúna",
             "category": "Infraestrutura",
-            "executiveSummary": "Intervenções da prefeitura na rede de drenagem pluvial interditam parcialmente faixas no sentido centro-bairro.",
+            "executiveSummary": "Colisão entre caminhonete e motocicleta na tarde desta segunda-feira causou lentidão e bloqueio parcial na movimentada Avenida Jove Soares.",
             "impactLevel": "Médio",
-            "investigativeAnalysis": "A obra afetará as vagas de estacionamento da 'Prainha', local conhecido por concentrar o público jovem de Itaúna no fim de semana. Bares e hamburguerias registrarão queda nas visitas presenciais nos horários de pico, compensada pelo aumento de entregas residenciais (delivery) na região centro-sul.",
-            "howToAct": "1. Comerciantes devem impulsionar canais de WhatsApp e aplicativos de entrega rápida.\n2. Indicar estacionamentos conveniados in ruas paralelas aos clientes fixos.\n3. Ajustar escala de entregadores para dar conta da alta de delivery.",
-            "howToProfit": "Crie a campanha 'Estacione Longe e Ganhe Cerveja': dê uma cortesia aos clientes que comprovarem que vieram de Uber ou que pararam o carro em estacionamentos conveniados parceiros.",
+            "investigativeAnalysis": "A Avenida Jove Soares ('Prainha') concentra o principal fluxo comercial e de lazer noturno de Itaúna. Bloqueios temporários ou lentidão decorrentes de acidentes de trânsito afetam diretamente o tempo de entrega de serviços de delivery (motoboys) de restaurantes locais e dificultam o tráfego de pedestres e clientes que acessam lojas e farmácias da região centro-sul.",
+            "howToAct": "1. Comércios baseados em delivery na Jove Soares devem avisar previamente os clientes sobre possíveis atrasos devido à lentidão no tráfego local.\n2. Lojistas e gerentes devem orientar entregadores a utilizar rotas alternativas pelas vias paralelas (como a Rua Silva Jardim).\n3. Reforçar a sinalização interna para quem retira pedidos no local para evitar tumultos na porta da loja.",
+            "howToProfit": "Crie campanhas de incentivo para compras presenciais fora do horário de pico do trânsito na avenida. Desenvolva promoções 'Retire no Balcão' com descontos extras para clientes que optem por buscar o pedido a pé na região central.",
             "image": None,
-            "sourceName": "Prefeitura de Itaúna",
-            "sourceUrl": "https://www.itauna.mg.gov.br/portal/noticias/0/3/4510/obras-de-drenagem-na-avenida-jove-soares-alteram-transito-nesta-semana"
+            "sourceName": "Folha do Povo Itaúna",
+            "sourceUrl": "https://folhapovoitauna.com.br/"
+        },
+        {
+            "id": str(uuid.uuid4()),
+            "title": "Operação de segurança apreende drogas sintéticas em Itaúna e reforça policiamento em bairros",
+            "category": "Economia Local",
+            "executiveSummary": "A Polícia Militar apreendeu ecstasy, cocaína e dinheiro em operação contra o tráfico, aumentando a segurança em rotas de comércio.",
+            "impactLevel": "Baixo",
+            "investigativeAnalysis": "Ações intensificadas das forças policiais na região de Itaúna-MG inibem pequenos delitos nos arredores de centros comerciais urbanos e melhoram a percepção de segurança de clientes e lojistas. Áreas comerciais com patrulhamento ostensivo ativo registram maior tráfego de pedestres ao anoitecer, incentivando a extensão das atividades de bares e cafeterias.",
+            "howToAct": "1. Comerciantes de bairros adjacentes devem apoiar as redes de vizinhos protegidos e cooperar ativamente compartilhando alertas de segurança.\n2. Manter as áreas externas dos comércios bem iluminadas para inibir movimentações suspeitas após o fechamento.\n3. Incentivar a utilização de meios digitais de pagamento para evitar o acúmulo de dinheiro em espécie no caixa físico da loja.",
+            "howToProfit": "Explore a maior sensação de segurança para organizar eventos ou promoções ao final da tarde ('Happy Hour' estendido). Divulgue nas redes sociais que seu local é monitorado e seguro para famílias e clientes locais.",
+            "image": None,
+            "sourceName": "Itaúna Alerta",
+            "sourceUrl": "https://itaunaalerta.com.br/"
         }
     ]
     
