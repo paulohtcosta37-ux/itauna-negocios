@@ -43,25 +43,25 @@ export function getMonthName(date) {
 }
 
 /**
- * Carrega o banco de dados JSON completo de notícias com cache-busting dinâmico
- * @returns {Promise<Array|null>} - Retorna a lista de todas as notícias ou null em caso de falha
+ * Carrega as notícias do dia corrente com cache-busting dinâmico
+ * @returns {Promise<Array|null>} - Retorna a lista de notícias de hoje ou null em caso de falha
  */
-export async function fetchNewsDatabase() {
+export async function fetchTodayNews() {
   const timestamp = new Date().getTime();
-  const filePath = `./src/data/news_database.json?v=${timestamp}`;
-  console.log(`[News Portal] Buscando Banco de Dados Unificado: ${filePath}`);
+  const filePath = `./src/data/news_today.json?v=${timestamp}`;
+  console.log(`[News Portal] Buscando Notícias do Dia: ${filePath}`);
   
   try {
     const response = await fetch(filePath);
-    console.log(`[News Portal] Status da resposta HTTP do Banco de Dados: ${response.status} ${response.statusText}`);
+    console.log(`[News Portal] Status da resposta HTTP das notícias de hoje: ${response.status} ${response.statusText}`);
     if (!response.ok) {
-      throw new Error(`Banco de dados não encontrado (HTTP ${response.status})`);
+      throw new Error(`Notícias de hoje não encontradas (HTTP ${response.status})`);
     }
     const data = await response.json();
-    console.log(`[News Portal] Banco de dados carregado com sucesso. Total de registros: ${data ? data.length : 0}`);
+    console.log(`[News Portal] Notícias de hoje carregadas. Total: ${data ? data.length : 0}`);
     return data;
   } catch (error) {
-    console.warn(`[News Portal] Erro ao carregar banco de dados de notícias:`, error.message);
+    console.warn(`[News Portal] Erro ao carregar notícias do dia:`, error.message);
     return null;
   }
 }

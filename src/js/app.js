@@ -1,4 +1,4 @@
-import { formatISODate, getWeekdayName, getMonthName, fetchNewsDatabase } from './utils.js?v=1.1.3';
+import { formatISODate, fetchTodayNews } from './utils.js?v=1.2.0';
 
 // Limpar Cache Storage imediatamente para evitar dados obsoletos
 if ('caches' in window) {
@@ -36,16 +36,10 @@ if ('serviceWorker' in navigator) {
 // ESTADO DA APLICAÇÃO
 // ==========================================================================
 const state = {
-  selectedDate: new Date(), // Inicialmente hoje
-  datesList: [],            // Últimos 14 dias
-  currentNews: [],          // Notícias do dia selecionado
-  newsDatabase: []          // Todo o banco de dados carregado na inicialização
+  currentNews: []          // Notícias do dia de hoje
 };
 
 // Elementos do DOM
-const dateTimeline = document.getElementById('dateTimeline');
-const calendarBtn = document.getElementById('calendarBtn');
-const hiddenDateInput = document.getElementById('hiddenDateInput');
 const newsGrid = document.getElementById('newsGrid');
 const loaderContainer = document.getElementById('loaderContainer');
 const emptyState = document.getElementById('emptyState');
@@ -58,192 +52,87 @@ const modalCloseBtn = document.getElementById('modalCloseBtn');
 // ==========================================================================
 document.addEventListener('DOMContentLoaded', async () => {
   if (loaderContainer) loaderContainer.style.display = 'flex';
-  setupDatesList();
-  renderDateTimeline();
   setupEventListeners();
   
-  // Carregar o banco de dados unificado na inicialização
-  await loadDatabase();
-  
-  // Carregar notícias para a data inicial (hoje)
-  loadNewsForDate(state.selectedDate);
+  // Carregar notícias para o dia de hoje
+  await loadTodayNews();
 });
-
-/**
- * Carrega o banco de dados completo na inicialização
- */
-async function loadDatabase() {
-  const data = await fetchNewsDatabase();
-  state.newsDatabase = data || [];
-}
-
-// ==========================================================================
-// LÓGICA DE DATAS E LINHA DO TEMPO
-// ==========================================================================
-
-/**
- * Preenche a lista com os últimos 14 dias (a partir de hoje para trás)
- */
-function setupDatesList() {
-  state.datesList = [];
-  for (let i = 0; i < 7; i++) {
-    const d = new Date();
-    d.setHours(12, 0, 0, 0); // Evita oscilações de fuso horário / mudança de dia
-    d.setDate(d.getDate() - i);
-    state.datesList.push(d);
-  }
-}
-
-/**
- * Renderiza o carrossel de datas no topo
- */
-function renderDateTimeline() {
-  dateTimeline.innerHTML = '';
-  
-  state.datesList.forEach((date) => {
-    const isoString = formatISODate(date);
-    const isSelected = formatISODate(state.selectedDate) === isoString;
-    
-    const dateItem = document.createElement('div');
-    dateItem.className = `date-item ${isSelected ? 'active' : ''}`;
-    dateItem.dataset.date = isoString;
-    
-    dateItem.innerHTML = `
-      <span class="date-item-weekday">${getWeekdayName(date)}</span>
-      <span class="date-item-day">${date.getDate()}</span>
-      <span class="date-item-month">${getMonthName(date)}</span>
-    `;
-    
-    dateItem.addEventListener('click', () => {
-      selectDate(date);
-      dateItem.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-    });
-    
-    dateTimeline.appendChild(dateItem);
-  });
-}
-
-/**
- * Modifica a data selecionada no estado e atualiza os componentes
- * @param {Date} date 
- */
-function selectDate(date) {
-  state.selectedDate = date;
-  
-  // Atualizar classe ativa na timeline
-  const isoString = formatISODate(date);
-  console.log(`[News Portal] Data selecionada na timeline: ${isoString}`);
-  const items = dateTimeline.querySelectorAll('.date-item');
-  let found = false;
-  
-  items.forEach(item => {
-    if (item.dataset.date === isoString) {
-      item.classList.add('active');
-      found = true;
-    } else {
-      item.classList.remove('active');
-    }
-  });
-
-  // Se a data selecionada não estiver na lista padrão (ex: escolhida via calendário)
-  if (!found) {
-    state.datesList.unshift(date);
-    renderDateTimeline();
-  }
-  
-  // Atualizar input do calendário invisível
-  hiddenDateInput.value = isoString;
-  
-  // Carrega as notícias
-  loadNewsForDate(date);
-}
 
 // ==========================================================================
 // CARREGAMENTO E RENDERIZAÇÃO DE DADOS
 // ==========================================================================
 
 /**
- * Busca notícias no diretório local e as renderiza
- * @param {Date} date 
+ * Busca notícias de hoje no JSON diário e as renderiza se passarem nas regras de horário e data
  */
-async function loadNewsForDate(date) {
-  const isoString = formatISODate(date);
-  console.log(`[News Portal] Carregando notícias para: ${isoString}`);
-  
-  // Limpar grid imediatamente ao iniciar o carregamento para evitar exibição de notícias antigas
-  newsGrid.innerHTML = '';
-  newsGrid.style.display = 'none';
-  emptyState.style.display = 'none';
-  loaderContainer.style.display = 'flex';
-  
+async function loadTodayNews() {
+  if (loaderContainer) loaderContainer.style.display = 'flex';
+  if (newsGrid) {
+    newsGrid.innerHTML = '';
+    newsGrid.style.display = 'none';
+  }
+  if (emptyState) emptyState.style.display = 'none';
+
   const today = new Date();
   const todayISO = formatISODate(today);
   const currentHour = today.getHours();
-  
-  // Regra de negócio: se for a data de hoje (ou futura) e ainda for antes das 18:00 locais,
-  // força a exibição do estado vazio avisando o horário de liberação comercial.
-  if (isoString > todayISO || (isoString === todayISO && currentHour < 18)) {
-    console.log(`[News Portal] Data ${isoString} bloqueada por horário (Antes das 18h).`);
-    loaderContainer.style.display = 'none';
-    state.currentNews = [];
-    showEmptyState(isoString);
+
+  // Regra de negócio: Se antes das 8:00 AM locais, bloqueia exibição
+  if (currentHour < 8) {
+    console.log(`[News Portal] Acesso antes das 08:00 AM (${currentHour}:00). Bloqueando exibição.`);
+    if (loaderContainer) loaderContainer.style.display = 'none';
+    showEmptyState(todayISO);
     return;
   }
+
+  // Buscar notícias de hoje
+  console.log(`[News Portal] Carregando notícias de hoje...`);
+  const news = await fetchTodayNews();
   
-  // Filtramos as notícias do banco de dados unificado em memória pela data clicada
-  console.log(`[News Portal] Filtrando notícias em memória para a data ${isoString}...`);
-  const news = state.newsDatabase.filter(item => item.date === isoString);
-  console.log(`[News Portal] Notícias encontradas no banco para ${isoString}:`, news);
-  
-  loaderContainer.style.display = 'none';
-  
+  if (loaderContainer) loaderContainer.style.display = 'none';
+
+  // Verificar consistência de dados (se o JSON contiver notícias de hoje)
   if (news && news.length > 0) {
-    state.currentNews = news;
-    renderNewsGrid(news);
-    newsGrid.style.display = 'grid';
+    const newsDate = news[0].date;
+    if (newsDate === todayISO) {
+      state.currentNews = news;
+      renderNewsGrid(news);
+      if (newsGrid) newsGrid.style.display = 'grid';
+    } else {
+      console.warn(`[News Portal] Data do JSON (${newsDate}) é diferente do dia de hoje (${todayISO}). Exibindo preparação.`);
+      state.currentNews = [];
+      showEmptyState(todayISO);
+    }
   } else {
+    console.warn(`[News Portal] Nenhuma notícia encontrada no JSON.`);
     state.currentNews = [];
-    showEmptyState(isoString);
+    showEmptyState(todayISO);
   }
 }
 
 /**
- * Exibe a mensagem de ausência de notícias estilizada
+ * Exibe a mensagem de ausência de notícias estilizada (Novidades a Caminho!)
  * @param {string} isoString 
  */
 function showEmptyState(isoString) {
   const [year, month, day] = isoString.split('-');
   const formattedDateStr = `${day}/${month}/${year}`;
   
-  const today = new Date();
-  const todayISO = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
-  
   const emptyStateIcon = document.getElementById('emptyStateIcon');
   const emptyStateTitle = document.getElementById('emptyStateTitle');
   
-  if (isoString >= todayISO) {
-    // Hoje ou Futuro
-    if (emptyStateIcon) {
-      emptyStateIcon.innerText = 'schedule';
-      emptyStateIcon.className = 'material-symbols-rounded empty-icon animated-clock';
-    }
-    if (emptyStateTitle) {
-      emptyStateTitle.innerText = 'Novidades a Caminho!';
-    }
-    emptyStateMessage.innerHTML = `As análises e oportunidades do dia <strong>${formattedDateStr}</strong> estão sendo preparadas pela nossa equipe.<br><span style="display:inline-block; margin-top:14px; font-weight:700; color:var(--primary); font-size: 1.05rem;">Volte após as 18:00 para acompanhar as notícias do dia!</span>`;
-  } else {
-    // Passado
-    if (emptyStateIcon) {
-      emptyStateIcon.innerText = 'history_toggle_off';
-      emptyStateIcon.className = 'material-symbols-rounded empty-icon';
-    }
-    if (emptyStateTitle) {
-      emptyStateTitle.innerText = 'Sem Relatórios Disponíveis';
-    }
-    emptyStateMessage.innerHTML = `Não há registros de análises comerciais cadastrados para o dia <strong>${formattedDateStr}</strong>.`;
+  if (emptyStateIcon) {
+    emptyStateIcon.innerText = 'schedule';
+    emptyStateIcon.className = 'material-symbols-rounded empty-icon animated-clock';
+  }
+  if (emptyStateTitle) {
+    emptyStateTitle.innerText = 'Novidades a Caminho!';
+  }
+  if (emptyStateMessage) {
+    emptyStateMessage.innerHTML = `As análises e oportunidades do dia <strong>${formattedDateStr}</strong> estão sendo preparadas pela nossa equipe.<br><span style="display:inline-block; margin-top:14px; font-weight:700; color:var(--primary); font-size: 1.05rem;">Volte após as 08:00 para acompanhar as notícias do dia!</span>`;
   }
   
-  emptyState.style.display = 'flex';
+  if (emptyState) emptyState.style.display = 'flex';
 }
 
 /**
@@ -600,24 +489,6 @@ function renderGoogleMap(container, newsItem) {
 // CONFIGURAÇÃO DE EVENTOS
 // ==========================================================================
 function setupEventListeners() {
-  if (calendarBtn) {
-    calendarBtn.addEventListener('click', () => {
-      if (hiddenDateInput) {
-        hiddenDateInput.showPicker ? hiddenDateInput.showPicker() : hiddenDateInput.click();
-      }
-    });
-  }
-  
-  if (hiddenDateInput) {
-    hiddenDateInput.addEventListener('change', (e) => {
-      if (e.target.value) {
-        const [year, month, day] = e.target.value.split('-');
-        const selectedDateObj = new Date(year, month - 1, day);
-        selectDate(selectedDateObj);
-      }
-    });
-  }
-
   if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeModal);
 
   if (newsModal) {

@@ -24,7 +24,7 @@ load_dotenv()
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 BASE_DIR = os.path.dirname(SCRIPT_DIR)
 DATA_DIR = os.path.join(BASE_DIR, 'src', 'data')
-DATABASE_FILE = os.path.join(DATA_DIR, 'news_database.json')
+DATABASE_FILE = os.path.join(DATA_DIR, 'news_today.json')
 
 # Garantir que a pasta de destino exista
 os.makedirs(DATA_DIR, exist_ok=True)
@@ -211,15 +211,15 @@ def analyze_with_gemini(raw_articles, api_key, target_date):
         formatted_input += f"Link: {art['link']}\n"
         formatted_input += "-" * 30 + "\n"
         
-    # Prompt do Sistema e Instruções refinados para Negócios de Itaúna (últimas 24h)
+    # Prompt do Sistema e Instruções refinados para Negócios de Itaúna
     prompt = f"""
 Você é um analista de inteligência de mercado altamente experiente, focado exclusivamente no comércio, negócios, oportunidades de mercado e na economia local da cidade de Itaúna, Minas Gerais (Brasil).
 
 Hoje é dia {target_date}. 
 
-Sua tarefa principal é produzir de 2 a 4 relatórios analíticos de mercado contendo notícias e fatos reais ocorridos estritamente nas últimas 24 horas (dia {target_date} ou o dia imediatamente anterior). 
+Sua tarefa principal é produzir de 2 a 4 relatórios analíticos de mercado contendo notícias e fatos reais ocorridos estritamente na janela de tempo de 8:01 do dia anterior até o momento atual da pesquisa (hoje). Garanta que os fatos sejam desse intervalo para refletirem o dia presente.
 
-Para coletar e enriquecer seus relatórios com informações frescas e reais das últimas 24h, você deve realizar pesquisas na web focando nas seguintes fontes em Itaúna-MG:
+Para coletar e enriquecer seus relatórios com informações frescas e reais desse intervalo, você deve realizar pesquisas na web focando nas seguintes fontes em Itaúna-MG:
 1. Publicações recentes nos perfis públicos de Instagram mais influentes da cidade:
    - Prefeitura de Itaúna (@prefeituradeitauna)
    - TV Cidade Itaúna (@tvcidadeitauna)
@@ -289,80 +289,74 @@ def generate_mock_data(target_date):
     """Gera dados simulados realistas para Itaúna na data fornecida"""
     print(f"[*] Gerando dados simulados (Mock Mode) para a data {target_date}...")
     
-    # Notícias de mock específicas para hoje (10 de Junho), incluindo o Arraial de Itaúna 2026
-    if target_date == "2026-06-10":
-        mock_data = [
-            {
-                "id": str(uuid.uuid4()),
-                "title": "Prefeitura confirma 'Arraial de Itaúna 2026' na Praça da Matriz com fins beneficentes e shows regionais",
-                "category": "Eventos",
-                "executiveSummary": "A Prefeitura de Itaúna, através da Secretaria de Cultura e Turismo, anunciou a edição 2026 da Festa Junina oficial para o dia 20 de junho na Praça da Matriz.",
-                "impactLevel": "Alto",
-                "investigativeAnalysis": "O Arraial de Itaúna 2026 acontecerá no sábado, dia 20 de junho, das 11h às 22h, e contará com a participação de 8 entidades assistenciais (como APAE, ABEASF, APAC e Lar Fraterno) comandando as barracas de comidas típicas (tropeiro, pastéis, caldos, churrasquinho e pescaria). Espera-se um público recorde de 20 mil pessoas ao longo do dia, o que aumentará drasticamente as vendas de vestuário típico (camisas xadrez, botas) nas semanas anteriores e gerará forte tráfego comercial no Centro de Itaúna, beneficiando estacionamentos, postos, hotéis e motoristas de aplicativo.",
-                "howToAct": "1. Lojistas de roupas e calçados do centro de Itaúna devem criar vitrines temáticas 'caipiras' com casacos e camisas xadrez.\n2. Distribuidores de alimentos e bebidas devem procurar as 8 entidades beneficentes parceiras para fechar acordos de fornecimento em escala de ingredientes típicos.\n3. Comércios alimentícios no entorno da Praça da Matriz devem reforçar equipes e estender o atendimento no sábado à noite.",
-                "howToProfit": "Desenvolva o 'Combo Arraial' de lanches rápidos para retirada no caminho do evento. Crie promoções em redes sociais com ideias de maquiagem e looks típicos com peças do seu estoque. Feche parcerias com motoristas locais para distribuir cartões com cupons de desconto físicos para quem for ou voltar do evento de táxi/Uber.",
-                "image": None,
-                "sourceName": "Prefeitura de Itaúna",
-                "sourceUrl": "https://www.itauna.mg.gov.br/portal/noticias/0/3/4521/prefeitura-confirma-arraial-de-itauna-2026-na-praca-da-matriz"
-            },
-            {
-                "id": str(uuid.uuid4()),
-                "title": "Festival Gastronômico de Itaúna 2026 inicia nesta sexta e promete aquecer comércio local",
-                "category": "Eventos",
-                "executiveSummary": "O evento gastronômico tradicional trará circuito gastronômico unificado na Praça da Matriz beneficiando diretamente restaurantes e hotéis.",
-                "impactLevel": "Alto",
-                "investigativeAnalysis": "O Festival Gastronômico atrai turistas de Divinópolis, Mateus Leme e Pará de Minas para Itaúna. A ocupação de hotéis atinge 85% para o fim de semana. O tráfego de pedestres no Centro sobe exponencialmente a partir das 18h.",
-                "howToAct": "1. Criar pratos temáticos paralelos fora da praça para capturar o público excedente.\n2. Lojas de roupas devem expor casacos de inverno na vitrine.\n3. Estender horário de atendimento no centro na sexta e sábado até mais tarde.",
-                "howToProfit": "Ofereça parcerias com motoristas de aplicativo locais dando cupons de desconto para sua loja. Use campanhas de geolocalização no Instagram no raio de 1km da Praça da Matriz.",
-                "image": None,
-                "sourceName": "Santana FM",
-                "sourceUrl": "https://santanafm.com.br/festival-gastronomico-de-itauna-2026-promete-aquecer-o-comercio-local/"
-            },
-            {
-                "id": str(uuid.uuid4()),
-                "title": "Inauguração de megaloja de farmácia Araújo no centro de Itaúna acirra concorrência com farmácias de bairro",
-                "category": "Concorrência",
-                "executiveSummary": "A nova unidade na Avenida Jove Soares conta com amplo estacionamento e mix ampliado, pressionando drogarias tradicionais a se adaptarem.",
-                "impactLevel": "Alto",
-                "investigativeAnalysis": "A nova Araújo na Jove Soares (Prainha) traz preços altamente competitivos e funcionamento 24h. As farmácias de bairro precisarão focar no atendimento humanizado, atenção farmacêutica personalizada e entrega rápida a domicílio via WhatsApp para manter a clientela fiel.",
-                "howToAct": "1. Revisar políticas de cashback e planos de fidelidade da drogaria de bairro.\n2. Focar no atendimento humanizado e no WhatsApp delivery rápido.\n3. Oferecer entrega grátis sem valor mínimo.",
-                "howToProfit": "Explore nichos como fitoterápicos artesanais, chás locais ou dermocosméticos orgânicos que a grande rede não prioriza. Realize parcerias de convênio de descontos com empresas locais para o fornecimento de medicamentos de uso contínuo a funcionários.",
-                "image": None,
-                "sourceName": "Jornal de Itaúna",
-                "sourceUrl": "https://jornaldeitauna.com.br/inauguracao-de-megaloja-da-farmacia-araujo-no-centro-de-itauna-acirra-concorrencia/"
-            }
-        ]
-    else:
-        # Fallback genérico para datas retroativas
-        mock_data = [
-            {
-                "id": str(uuid.uuid4()),
-                "title": "Universidade de Itaúna (UIT) anuncia volta às aulas e aquece setor de copiadoras e transporte estudantil",
-                "category": "Economia Local",
-                "executiveSummary": "O início do período acadêmico na UIT movimenta cerca de 8 mil estudantes na região universitária diariamente.",
-                "impactLevel": "Médio",
-                "investigativeAnalysis": "O retorno dos estudantes da UIT (vindos de várias cidades vizinhas) gera impacto direto nas repúblicas estudantis, lanchonetes próximas ao campus, papelarias e serviços de vans. O comércio do bairro Universitário e do Centro de Itaúna registra tradicional alta em consumo rápido de lanches e materiais escolares nas primeiras duas semanas letivas.",
-                "howToAct": "1. Papelarias e copiadoras locais devem estender o horário de funcionamento das 18h às 22h.\n2. Lanchonetes no trajeto universitário devem criar combos especiais de 'estudante' a preços promocionais.\n3. Motoristas de vans devem divulgar vagas disponíveis nas redes estudantis.",
-                "howToProfit": "Crie parcerias de descontos com o Diretório Acadêmico da UIT. Ofereça entrega de materiais de impressão direto na universidade em horários agendados.",
-                "image": None,
-                "sourceName": "Universidade de Itaúna",
-                "sourceUrl": "https://www.uit.br/noticias/volta-as-aulas-movimenta-campus-universitario"
-            },
-            {
-                "id": str(uuid.uuid4()),
-                "title": "Alerta de tráfego: Obra na Av. Jove Soares altera acesso à área de lazer noturna",
-                "category": "Infraestrutura",
-                "executiveSummary": "Intervenções da prefeitura na rede de drenagem pluvial interditam parcialmente faixas no sentido centro-bairro.",
-                "impactLevel": "Médio",
-                "investigativeAnalysis": "A obra afetará as vagas de estacionamento da 'Prainha', local conhecido por concentrar o público jovem de Itaúna no fim de semana. Bares e hamburguerias registrarão queda nas visitas presenciais nos horários de pico, compensada pelo aumento de entregas residenciais (delivery) na região centro-sul.",
-                "howToAct": "1. Comerciantes devem impulsionar canais de WhatsApp e aplicativos de entrega rápida.\n2. Indicar estacionamentos conveniados in ruas paralelas aos clientes fixos.\n3. Ajustar escala de entregadores para dar conta da alta de delivery.",
-                "howToProfit": "Crie a campanha 'Estacione Longe e Ganhe Cerveja': dê uma cortesia aos clientes que comprovarem que vieram de Uber ou que pararam o carro em estacionamentos conveniados parceiros.",
-                "image": None,
-                "sourceName": "Prefeitura de Itaúna",
-                "sourceUrl": "https://www.itauna.mg.gov.br/portal/noticias/0/3/4510/obras-de-drenagem-na-avenida-jove-soares-alteram-transito-nesta-semana"
-            }
-        ]
-        
+    mock_data = [
+        {
+            "id": str(uuid.uuid4()),
+            "title": "Prefeitura confirma 'Arraial de Itaúna 2026' na Praça da Matriz com fins beneficentes e shows regionais",
+            "category": "Eventos",
+            "executiveSummary": "A Prefeitura de Itaúna, através da Secretaria de Cultura e Turismo, anunciou a edição 2026 da Festa Junina oficial para o dia 20 de junho na Praça da Matriz.",
+            "impactLevel": "Alto",
+            "investigativeAnalysis": "O Arraial de Itaúna 2026 acontecerá no sábado, dia 20 de junho, das 11h às 22h, e contará com a participação de 8 entidades assistenciais (como APAE, ABEASF, APAC e Lar Fraterno) comandando as barracas de comidas típicas (tropeiro, pastéis, caldos, churrasquinho e pescaria). Espera-se um público recorde de 20 mil pessoas ao longo do dia, o que aumentará drasticamente as vendas de vestuário típico (camisas xadrez, botas) nas semanas anteriores e gerará forte tráfego comercial no Centro de Itaúna, beneficiando estacionamentos, postos, hotéis e motoristas de aplicativo.",
+            "howToAct": "1. Lojistas de roupas e calçados do centro de Itaúna devem criar vitrines temáticas 'caipiras' com casacos e camisas xadrez.\n2. Distribuidores de alimentos e bebidas devem procurar as 8 entidades beneficentes parceiras para fechar acordos de fornecimento em escala de ingredientes típicos.\n3. Comércios alimentícios no entorno da Praça da Matriz devem reforçar equipes e estender o atendimento no sábado à noite.",
+            "howToProfit": "Desenvolva o 'Combo Arraial' de lanches rápidos para retirada no caminho do evento. Crie promoções em redes sociais com ideias de maquiagem e looks típicos com peças do seu estoque. Feche parcerias com motoristas locais para distribuir cartões com cupons de desconto físicos para quem for ou voltar do evento de táxi/Uber.",
+            "image": None,
+            "sourceName": "Prefeitura de Itaúna",
+            "sourceUrl": "https://www.itauna.mg.gov.br/portal/noticias/0/3/4521/prefeitura-confirma-arraial-de-itauna-2026-na-praca-da-matriz"
+        },
+        {
+            "id": str(uuid.uuid4()),
+            "title": "Festival Gastronômico de Itaúna 2026 inicia nesta sexta e promete aquecer comércio local",
+            "category": "Eventos",
+            "executiveSummary": "O evento gastronômico tradicional trará circuito gastronômico unificado na Praça da Matriz beneficiando diretamente restaurantes e hotéis.",
+            "impactLevel": "Alto",
+            "investigativeAnalysis": "O Festival Gastronômico atrai turistas de Divinópolis, Mateus Leme e Pará de Minas para Itaúna. A ocupação de hotéis atinge 85% para o fim de semana. O tráfego de pedestres no Centro sobe exponencialmente a partir das 18h.",
+            "howToAct": "1. Criar pratos temáticos paralelos fora da praça para capturar o público excedente.\n2. Lojas de roupas devem expor casacos de inverno na vitrine.\n3. Estender horário de atendimento no centro na sexta e sábado até mais tarde.",
+            "howToProfit": "Ofereça parcerias com motoristas de aplicativo locais dando cupons de desconto para sua loja. Use campanhas de geolocalização no Instagram no raio de 1km da Praça da Matriz.",
+            "image": None,
+            "sourceName": "Santana FM",
+            "sourceUrl": "https://santanafm.com.br/festival-gastronomico-de-itauna-2026-promete-aquecer-o-comercio-local/"
+        },
+        {
+            "id": str(uuid.uuid4()),
+            "title": "Inauguração de megaloja de farmácia Araújo no centro de Itaúna acirra concorrência com farmácias de bairro",
+            "category": "Concorrência",
+            "executiveSummary": "A nova unidade na Avenida Jove Soares conta com amplo estacionamento e mix ampliado, pressionando drogarias tradicionais a se adaptarem.",
+            "impactLevel": "Alto",
+            "investigativeAnalysis": "A nova Araújo na Jove Soares (Prainha) traz preços altamente competitivos e funcionamento 24h. As farmácias de bairro precisarão focar no atendimento humanizado, atenção farmacêutica personalizada e entrega rápida a domicílio via WhatsApp para manter a clientela fiel.",
+            "howToAct": "1. Revisar políticas de cashback e planos de fidelidade da drogaria de bairro.\n2. Focar no atendimento humanizado e no WhatsApp delivery rápido.\n3. Oferecer entrega grátis sem valor mínimo.",
+            "howToProfit": "Explore nichos como fitoterápicos artesanais, chás locais ou dermocosméticos orgânicos que a grande rede não prioriza. Realize parcerias de convênio de descontos com empresas locais para o fornecimento de medicamentos de uso contínuo a funcionários.",
+            "image": None,
+            "sourceName": "Jornal de Itaúna",
+            "sourceUrl": "https://jornaldeitauna.com.br/inauguracao-de-megaloja-da-farmacia-araujo-no-centro-de-itauna-acirra-concorrencia/"
+        },
+        {
+            "id": str(uuid.uuid4()),
+            "title": "Universidade de Itaúna (UIT) anuncia volta às aulas e aquece setor de copiadoras e transporte estudantil",
+            "category": "Economia Local",
+            "executiveSummary": "O início do período acadêmico na UIT movimenta cerca de 8 mil estudantes na região universitária diariamente.",
+            "impactLevel": "Médio",
+            "investigativeAnalysis": "O retorno dos estudantes da UIT (vindos de várias cidades vizinhas) gera impacto direto nas repúblicas estudantis, lanchonetes próximas ao campus, papelarias e serviços de vans. O comércio do bairro Universitário e do Centro de Itaúna registra tradicional alta em consumo rápido de lanches e materiais escolares nas primeiras duas semanas letivas.",
+            "howToAct": "1. Papelarias e copiadoras locais devem estender o horário de funcionamento das 18h às 22h.\n2. Lanchonetes no trajeto universitário devem criar combos especiais de 'estudante' a preços promocionais.\n3. Motoristas de vans devem divulgar vagas disponíveis nas redes estudantis.",
+            "howToProfit": "Crie parcerias de descontos com o Diretório Acadêmico da UIT. Ofereça entrega de materiais de impressão direto na universidade em horários agendados.",
+            "image": None,
+            "sourceName": "Universidade de Itaúna",
+            "sourceUrl": "https://www.uit.br/noticias/volta-as-aulas-movimenta-campus-universitario"
+        },
+        {
+            "id": str(uuid.uuid4()),
+            "title": "Alerta de tráfego: Obra na Av. Jove Soares altera acesso à área de lazer noturna",
+            "category": "Infraestrutura",
+            "executiveSummary": "Intervenções da prefeitura na rede de drenagem pluvial interditam parcialmente faixas no sentido centro-bairro.",
+            "impactLevel": "Médio",
+            "investigativeAnalysis": "A obra afetará as vagas de estacionamento da 'Prainha', local conhecido por concentrar o público jovem de Itaúna no fim de semana. Bares e hamburguerias registrarão queda nas visitas presenciais nos horários de pico, compensada pelo aumento de entregas residenciais (delivery) na região centro-sul.",
+            "howToAct": "1. Comerciantes devem impulsionar canais de WhatsApp e aplicativos de entrega rápida.\n2. Indicar estacionamentos conveniados in ruas paralelas aos clientes fixos.\n3. Ajustar escala de entregadores para dar conta da alta de delivery.",
+            "howToProfit": "Crie a campanha 'Estacione Longe e Ganhe Cerveja': dê uma cortesia aos clientes que comprovarem que vieram de Uber ou que pararam o carro em estacionamentos conveniados parceiros.",
+            "image": None,
+            "sourceName": "Prefeitura de Itaúna",
+            "sourceUrl": "https://www.itauna.mg.gov.br/portal/noticias/0/3/4510/obras-de-drenagem-na-avenida-jove-soares-alteram-transito-nesta-semana"
+        }
+    ]
+    
     return mock_data
 
 
@@ -449,9 +443,6 @@ def main():
         # 2. Enviar para análise do Gemini
         print(f"[+] Total de matérias coletadas para análise: {len(all_articles)}")
         
-        # Realiza uma query adicional usando os termos de redes sociais/UIT se estivéssemos usando APIs de busca como Tavily
-        # (Neste script, as queries adicionais de redes sociais/UIT enriquecem as fontes passadas para a IA)
-        
         news_result = analyze_with_gemini(all_articles, gemini_key, target_date)
         
         # Fallback de segurança se a chamada falhar
@@ -459,36 +450,20 @@ def main():
             print("[!] Falha na geração com IA. Usando Mock como plano de contingência.")
             news_result = generate_mock_data(target_date)
             
-    # Salvar no banco de dados central consolidado news_database.json
+    # Salvar no arquivo central de notícias do dia (news_today.json)
     if news_result:
-        # Carregar banco de dados de notícias existente se houver
-        database = []
-        if os.path.exists(DATABASE_FILE):
-            try:
-                with open(DATABASE_FILE, 'r', encoding='utf-8') as f:
-                    database = json.load(f)
-                print(f"[*] Banco de dados carregado: {len(database)} registros encontrados.")
-            except Exception as e:
-                print(f"[!] Erro ao ler banco de dados existente: {e}. Criando um novo.")
-        
-        # Injetar o campo de data e remover duplicatas antigas do mesmo dia
+        # Injetar o campo de data e garantir a consistência
         for item in news_result:
             item["date"] = target_date
-            
-        # Filtrar o banco de dados para remover notícias anteriores com a mesma data alvo
-        database = [item for item in database if item.get("date") != target_date]
-        
-        # Anexar as novas notícias
-        database.extend(news_result)
         
         try:
             with open(DATABASE_FILE, 'w', encoding='utf-8') as f:
-                json.dump(database, f, ensure_ascii=False, indent=2)
+                json.dump(news_result, f, ensure_ascii=False, indent=2)
             
             print("=" * 60)
-            print(f"[SUCCESS] Banco de dados de negócios atualizado com sucesso!")
+            print(f"[SUCCESS] Relatório diário de negócios salvo com sucesso!")
             print(f"[SUCCESS] Caminho: {DATABASE_FILE}")
-            print(f"[SUCCESS] Total de análises no banco: {len(database)}")
+            print(f"[SUCCESS] Total de análises de hoje: {len(news_result)}")
             print("=" * 60)
             
             # Enviar atualizações para o GitHub se for um repositório git
